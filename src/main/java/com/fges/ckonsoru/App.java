@@ -21,7 +21,19 @@ public class App {
         ConfigLoader cf = new ConfigLoader();
         Properties properties = cf.getProperties();
         System.out.println("Mode de persistence : "
-                +properties.getProperty("persistence"));
+                + properties.getProperty("persistence"));
+                
+        Menu menu = new Menu();
+        Manager manager = new Manager();
+        
+        
+        int choix;
+        int action;
+        do {
+            menu.afficher();
+            choix = menu.attendreChoix();
+            action = manager.executerAction(choix);
+        } while (action != 0);
     }
     
 }
