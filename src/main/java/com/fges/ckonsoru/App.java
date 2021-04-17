@@ -22,11 +22,10 @@ public class App {
         ConfigLoader cf = new ConfigLoader();
         Properties properties = cf.getProperties();
         String persistence = properties.getProperty("persistence");
-
         DatabaseInteraction db;
-        if (persistence == "xml") {
+        if (persistence.equals("xml")) {
             db = new XmlInteraction();
-        } else if (persistence == "bdd") {
+        } else if (persistence.equals("bdd")) {
             db = new PostgresInteraction();
         } else {
             System.out.println("Mode de persistence inconnu.");
