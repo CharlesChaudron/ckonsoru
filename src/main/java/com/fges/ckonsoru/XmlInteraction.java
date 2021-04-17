@@ -2,8 +2,6 @@ package com.fges.ckonsoru;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,11 +21,17 @@ import org.xml.sax.SAXException;
 
 public class XmlInteraction implements DatabaseInteraction {
 
+    String xmlFilePath;
+
+    public XmlInteraction(String xmlFilePath) {
+        this.xmlFilePath = xmlFilePath;
+    }
+
     @Override
     public Map<Integer, Map<String, String>> selectElementsFromWhere(String[] tags, String from, String where,
             String equals) {
         try {
-            File inputFile = new File("src/main/resources/datas.xml");
+            File inputFile = new File(this.xmlFilePath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder;
 
