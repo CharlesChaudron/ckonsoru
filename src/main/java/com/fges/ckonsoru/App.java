@@ -5,6 +5,7 @@
  */
 package com.fges.ckonsoru;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Properties;
 
@@ -59,15 +60,19 @@ public class App {
                     + tag.get("debut") + "\n" + "fin : " + tag.get("fin") + "\n" + "veterinaire : "
                     + tag.get("veterinaire") + "\n");
         }*/
-        String[] tags = { "debut", "client", "veterinaire" };
-        Map<Integer, Map<String, String>> disponibilites = db.selectElementsFromWhere(tags, "rendezvous", "debut",
-                "2021-03-18");
-        System.out.println(disponibilites.size());
-        for (int i = 0; i < disponibilites.size(); i++) {
-            Map<String, String> tag = disponibilites.get(i);
-            System.out.println("tag numero " + i + " :\n" + "debut : " + tag.get("debut") + "\n" + "client : "
-                    + tag.get("client") + "\n" + "veterinaire : " + tag.get("veterinaire") + "\n");
-        }
+        /*
+         String[] tags = { "debut", "client", "veterinaire" };
+         Map<Integer, Map<String, String>> disponibilites = db.selectElementsFromWhere(tags, "rendezvous", "debut",
+              "2021-03-18");
+         System.out.println(disponibilites.size());
+         for (int i = 0; i < disponibilites.size(); i++) {
+          Map<String, String> tag = disponibilites.get(i);
+          System.out.println("tag numero " + i + " :\n" + "debut : " + tag.get("debut") + "\n" + "client : "
+                  + tag.get("client") + "\n" + "veterinaire : " + tag.get("veterinaire") + "\n");
+         }*/
+        
+        RdvManager rdvManager = new RdvManager(db);
+        rdvManager.getRdvsDisponibles("18/03/2021");
         //fin tests
     }
 
