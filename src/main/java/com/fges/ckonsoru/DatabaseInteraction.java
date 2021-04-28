@@ -11,5 +11,8 @@ public interface DatabaseInteraction {
      * @param equals ce à quoi le tag doit être égal
      * @return un map avec les id en clé et en valeur un map qui contient le tag et la valeur du tag
      */
-    public Map<Integer, Map<String, String>> selectElementsFromWhere(String[] tags, String from, String where, String equals);
+    public Map<Integer, Map<String, String>> selectElementsFromWhere(String[] tags, String from, String where,
+            String equals);
+    
+    public String dbMode();
 }

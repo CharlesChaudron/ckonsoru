@@ -11,4 +11,8 @@ public class PostgresInteraction implements DatabaseInteraction {
         return null;
     }
     
+    @Override
+    public String dbMode() {
+        return "bdd";
+    }
 }

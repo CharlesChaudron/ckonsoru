@@ -55,7 +55,7 @@ public class XmlInteraction implements DatabaseInteraction {
             NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
 
             //creation du map retourné qui contiendra tous les elements
-            Map<Integer, Map<String, String>> res = new HashMap<Integer, Map<String, String>>();  
+            Map<Integer, Map<String, String>> res = new HashMap<Integer, Map<String, String>>();
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node nNode = nodeList.item(i);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -80,5 +80,10 @@ public class XmlInteraction implements DatabaseInteraction {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    @Override
+    public String dbMode() {
+        return "xml";
     }
 }

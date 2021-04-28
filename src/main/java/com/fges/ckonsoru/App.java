@@ -34,6 +34,7 @@ public class App {
         Menu menu = new Menu();
         Manager manager = new Manager(db);
         
+        menu.afficherPersistence(db.dbMode());
         
         int choix;
         int action;
