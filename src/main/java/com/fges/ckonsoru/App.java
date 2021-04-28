@@ -5,8 +5,6 @@
  */
 package com.fges.ckonsoru;
 
-import java.text.SimpleDateFormat;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -34,7 +32,7 @@ public class App {
         }
                 
         Menu menu = new Menu();
-        Manager manager = new Manager();
+        Manager manager = new Manager(db);
         
         
         int choix;
@@ -44,9 +42,6 @@ public class App {
             choix = menu.attendreChoix();
             action = manager.executerAction(choix);
         } while (action != 0);
-        
-        RdvManager rdvManager = new RdvManager(db);
-        rdvManager.afficherDisponibilitesJour("18/03/2021");
         //fin tests
     }
 

@@ -1,5 +1,8 @@
 package com.fges.ckonsoru;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Menu {
     java.util.Scanner entree;
 
@@ -29,5 +32,19 @@ public class Menu {
             this.attendreChoix();
         }
         return choix;
+    }
+
+    public String attendreDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String saisie = null;
+        System.out.println("Entrer une date au format JJ/MM/AAAA (ex: 18/03/2021)");
+        try {
+            saisie = entree.nextLine();
+            LocalDate.parse(saisie, formatter);
+        } catch (Exception e) {
+            System.out.println("Merci de siasir une date au bon format.");
+            saisie = this.attendreDate();
+        }
+        return saisie;
     }
 }
