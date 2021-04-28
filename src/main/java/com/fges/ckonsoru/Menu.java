@@ -2,6 +2,7 @@ package com.fges.ckonsoru;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Menu {
@@ -55,7 +56,11 @@ public class Menu {
         System.out.println("Indiquer le nom du " + personne + ". (ex: M. Byrnison)");
         try {
             saisie = entree.nextLine();
-            pattern.matcher(personne);
+            Matcher m = pattern.matcher(saisie);
+            if (m.matches() != true) {
+                System.out.println("Merci de siasir un nom au bon format.");
+                saisie = this.attendreNom(personne);
+            }
         } catch (Exception e) {
             System.out.println("Merci de siasir un nom au bon format.");
             saisie = this.attendreDate();
