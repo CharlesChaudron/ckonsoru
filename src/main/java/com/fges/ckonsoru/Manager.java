@@ -13,6 +13,7 @@ public class Manager {
     public int executerAction(int choix) {
         switch (choix) {
         case 1://liste des rdvs dispos à une date donnée
+        System.out.println("Afficher la liste des disponibilités pour une date");
             this.rdvsDispos();
             return 1;
 
@@ -22,11 +23,11 @@ public class Manager {
             return 1;
 
         case 3://enregistre un rdv pour un client chez un vétérianire
-            System.out.println("prendre un rdv");
+            System.out.println("Prise de rendez-vous");
             return 1;
 
         case 4://supprime un rdv
-            System.out.println("supprimer un rdv");
+            System.out.println("Suppression de rendez-vous");
             return 1;
 
         case 9://quitte le programme
