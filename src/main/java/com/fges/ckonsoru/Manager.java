@@ -17,7 +17,8 @@ public class Manager {
             return 1;
 
         case 2://liste les rdvs d'un client
-            System.out.println("liste les rdv d'un client");
+            System.out.println("Affichage des rendez-vous d un client");
+            this.rdvsClient();
             return 1;
 
         case 3://enregistre un rdv pour un client chez un vétérianire
@@ -41,6 +42,11 @@ public class Manager {
     public void rdvsDispos() {
         RdvManager rdvManager = new RdvManager(db);
         rdvManager.afficherDisponibilitesJour(this.menu.attendreDate());
+    }
+
+    public void rdvsClient() {
+        RdvManager rdvManager = new RdvManager(db);
+        rdvManager.afficherRdvsClient(this.menu.attendreNom("client"));
     }
 
     public void actionInconnue() {

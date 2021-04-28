@@ -76,4 +76,38 @@ public class RdvManager {
         }
     }
     
+    public List<String> getRdvsClient(String client) {
+        List<String> rdvsClient = new ArrayList<String>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        // récupération de toutes les disponibilités au jour donné
+        Map<Integer, Map<String, String>> rdvs;
+        String[] tagsDispos = { "client", "debut", "veterinaire" };
+        rdvs = dbInteraction.selectElementsFromWhere(tagsDispos, "rendezvous", "client", client);
+
+        for (int i = 0; i < rdvs.size(); i++) {
+            String debutText = rdvs.get(i).get("debut");
+            LocalDateTime debut = LocalDateTime.parse(debutText);
+            debutText = debut.format(formatter);
+            String veterinaire = rdvs.get(i).get("veterinaire");
+            rdvsClient.add(debutText + " avec " + veterinaire);
+        }
+
+        return rdvsClient;
+    }
+
+    public void afficherRdvsClient(String client) {
+        List<String> rdvsDispos = this.getRdvsClient(client);
+        String nbRdvs = Integer.toString(rdvsDispos.size());
+        System.out.println(nbRdvs + " rendez-vous trouvé(s) pour " + client);
+
+        if (rdvsDispos.size() > 0) {
+            for (String dispo : rdvsDispos) {
+                System.out.println(dispo);
+            }
+            System.out.println("\n");
+        } else {
+            System.out.println("Pas de disponibilités à cette date");
+        }
+    }
 }
