@@ -120,7 +120,13 @@ public class RdvManager {
         System.out.println("Un rendez-vous pour " + client + " avec " + veterinaire + " a été réservé le " + dateTime.toString() + "\n");
     }
     
-    public void deleteRdv(LocalDateTime date, String client) {
-
+    public void deleteRdv(String date, String client) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+        String[] columns = { "debut", "client" };
+        String[] values = { dateTime.toString(), client };
+        this.dbInteraction.delete("rendezvous", columns, values);
+        System.out.println("Un rendez-vous pour " + client + " le " + dateTime.toString() + " a été supprimé "
+                + "\n");
     }
 }

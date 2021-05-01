@@ -31,6 +31,7 @@ public class Manager {
 
         case 4://supprime un rdv
             System.out.println("Suppression de rendez-vous");
+            this.deleteRdvClient();
             return 1;
 
         case 9://quitte le programme
@@ -52,8 +53,13 @@ public class Manager {
     }
 
     public void addRdvClient() {
-        this.rdvManager.addRdv(this.menu.attendreDateTime(), 
-                this.menu.attendreNom("veterinaire"), this.menu.attendreNom("client"));
+        this.rdvManager.addRdv(this.menu.attendreDateTime(), this.menu.attendreNom("veterinaire"),
+                this.menu.attendreNom("client"));
+    }
+    
+    public void deleteRdvClient() {
+        this.rdvManager.deleteRdv(this.menu.attendreDateTime(),
+                this.menu.attendreNom("client"));
     }
 
     public void actionInconnue() {

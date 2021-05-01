@@ -20,4 +20,9 @@ public class PostgresInteraction implements DatabaseInteraction {
     public Integer insert(String table, String[] columns, String[] values) {
         return 1;
     }
+
+    @Override
+    public Integer delete(String table, String[] columns, String[] values) {
+        return 1;
+    }
 }

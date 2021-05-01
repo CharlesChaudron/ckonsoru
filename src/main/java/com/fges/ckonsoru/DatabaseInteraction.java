@@ -19,10 +19,19 @@ public interface DatabaseInteraction {
 
     /**
      * 
-     * @param table rendez-vous ou disponibilites
+     * @param table rendezvous ou disponibilites
      * @param columns les tags dans lesquels ajouter les values
      * @param values values à ajouter dans les tags correspondants
      * @return int 0 si ok, 1 si echec
      */
     public Integer insert(String table, String[] columns, String[] values);
+
+    /**
+     * 
+     * @param table   rendezvous ou disponibilites
+     * @param columns
+     * @param values
+     * @return
+     */
+    public Integer delete(String table, String[] columns, String[] values);
 }

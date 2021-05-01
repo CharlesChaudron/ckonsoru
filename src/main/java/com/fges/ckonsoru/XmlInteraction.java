@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -94,9 +95,6 @@ public class XmlInteraction implements DatabaseInteraction {
 
     @Override
     public Integer insert(String table, String[] columns, String[] values) {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        DocumentBuilder builder;
         if (table == "rendezvous") {
             table = "rdvs";
         } else if (table == "disponibilite") {
@@ -105,6 +103,9 @@ public class XmlInteraction implements DatabaseInteraction {
             System.err.println("Erreur dans XmlInterration : Table inconnue");
         }
         try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder;
             // charger le fichier xml
             builder = factory.newDocumentBuilder();
             Document xmldoc = builder.parse(this.xmlFilePath);
@@ -119,7 +120,6 @@ public class XmlInteraction implements DatabaseInteraction {
                 element.appendChild(xmldoc.createTextNode(values[i]));
                 rdv.appendChild(element);
             }
-            
 
             // ajout au noeud rdvs
             NodeList nodes = xmldoc.getElementsByTagName(table);
@@ -136,6 +136,69 @@ public class XmlInteraction implements DatabaseInteraction {
             e.printStackTrace(System.err);
         }
 
+        return 0;
+    }
+    
+    @Override
+    public Integer delete(String table, String[] columns, String[] values) {
+        if (table == "rendezvous") {
+            table = "rdvs/rdv";
+        } else if (table == "disponibilite") {
+            table = "disponibilites/disponibilite";
+        } else {
+            System.out.println("Erreur dans XmlInterration : Table inconnue");
+        }
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder;
+            // charger le fichier xml
+            builder = factory.newDocumentBuilder();
+            Document xmldoc = builder.parse(this.xmlFilePath);
+
+
+            String conditions = "";
+            for (int i = 0; i < columns.length; i++) {
+                conditions += columns[i] + "='" + values[i] + "'";
+                if (i < columns.length - 1) {
+                    conditions += " and ";
+                }
+            }
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            String expression = "/ckonsoru/" + table + "[" + conditions + "]";
+            NodeList nodes = (NodeList) xPath.compile(expression).evaluate(xmldoc, XPathConstants.NODESET);
+
+            if (nodes.getLength() == 0) {
+                System.out.println("Pas de rdv à supprimer.");
+                return 0;
+            }
+            
+            Node parent = nodes.item(0).getParentNode();
+            for (int i = 0; i < nodes.getLength(); i++) {
+                parent.removeChild(nodes.item(i));
+            }
+            
+
+            // enregistrer le fichier
+            DOMSource source = new DOMSource(xmldoc);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            StreamResult result = new StreamResult(this.xmlFilePath);
+            transformer.transform(source, result);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+        
         return 0;
     }
 }
