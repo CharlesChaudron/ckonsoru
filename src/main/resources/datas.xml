@@ -1,4 +1,4 @@
-<ckonsoru>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ckonsoru>
     <disponibilites>
         <disponibilite>
             <jour>lundi</jour>
@@ -104,5 +104,5 @@
             <client>M. Parslow</client>
             <veterinaire>L. Asriel</veterinaire>
         </rdv>
-    </rdvs>
+    <rdv><debut>2021-03-18T15:00</debut><client>M. Byrnison</client><veterinaire>L. Asriel</veterinaire></rdv></rdvs>
 </ckonsoru>

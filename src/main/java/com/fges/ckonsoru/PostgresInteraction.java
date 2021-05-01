@@ -15,4 +15,9 @@ public class PostgresInteraction implements DatabaseInteraction {
     public String dbMode() {
         return "bdd";
     }
+
+    @Override
+    public Integer insert(String table, String[] columns, String[] values) {
+        return 1;
+    }
 }

@@ -1,6 +1,7 @@
 package com.fges.ckonsoru;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +43,20 @@ public class Menu {
         try {
             saisie = entree.nextLine();
             LocalDate.parse(saisie, formatter);
+        } catch (Exception e) {
+            System.out.println("Merci de siasir une date au bon format.");
+            saisie = this.attendreDate();
+        }
+        return saisie;
+    }
+
+    public String attendreDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String saisie = null;
+        System.out.println("Entrer une date au format JJ/MM/AAAA HH:MM (ex: 18/03/2021 15:00)");
+        try {
+            saisie = entree.nextLine();
+            LocalDateTime.parse(saisie, formatter);
         } catch (Exception e) {
             System.out.println("Merci de siasir une date au bon format.");
             saisie = this.attendreDate();

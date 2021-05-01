@@ -4,10 +4,12 @@ public class Manager {
 
     DatabaseInteraction db;
     Menu menu;
+    RdvManager rdvManager;
 
     public Manager(DatabaseInteraction db) {
         this.db = db;
         this.menu = new Menu();
+        this.rdvManager = new RdvManager(db);
     }
 
     public int executerAction(int choix) {
@@ -24,6 +26,7 @@ public class Manager {
 
         case 3://enregistre un rdv pour un client chez un vétérianire
             System.out.println("Prise de rendez-vous");
+            this.addRdvClient();
             return 1;
 
         case 4://supprime un rdv
@@ -41,13 +44,16 @@ public class Manager {
     }
 
     public void rdvsDispos() {
-        RdvManager rdvManager = new RdvManager(db);
-        rdvManager.afficherDisponibilitesJour(this.menu.attendreDate());
+        this.rdvManager.afficherDisponibilitesJour(this.menu.attendreDate());
     }
 
     public void rdvsClient() {
-        RdvManager rdvManager = new RdvManager(db);
-        rdvManager.afficherRdvsClient(this.menu.attendreNom("client"));
+        this.rdvManager.afficherRdvsClient(this.menu.attendreNom("client"));
+    }
+
+    public void addRdvClient() {
+        this.rdvManager.addRdv(this.menu.attendreDateTime(), 
+                this.menu.attendreNom("veterinaire"), this.menu.attendreNom("client"));
     }
 
     public void actionInconnue() {

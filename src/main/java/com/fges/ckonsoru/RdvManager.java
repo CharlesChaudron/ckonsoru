@@ -107,7 +107,20 @@ public class RdvManager {
             }
             System.out.println("\n");
         } else {
-            System.out.println("Pas de disponibilités à cette date");
+            System.out.println("Pas de disponibilités à cette date.");
         }
+    }
+
+    public void addRdv(String date, String veterinaire, String client) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+        String[] columns = {"debut", "client", "veterinaire"};
+        String[] values = {dateTime.toString(), client, veterinaire};
+        this.dbInteraction.insert("rendezvous", columns, values);
+        System.out.println("Un rendez-vous pour " + client + " avec " + veterinaire + " a été réservé le " + dateTime.toString() + "\n");
+    }
+    
+    public void deleteRdv(LocalDateTime date, String client) {
+
     }
 }
