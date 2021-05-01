@@ -13,16 +13,19 @@ public class Menu {
         this.entree = new java.util.Scanner(System.in);
     }
 
+    //affiche les différents choix possibles de l'application
     public void afficher() {
         System.out.println("Actions disponibles : \n" + "1: Afficher les crénaux disponibles pour une date donnée\n"
                 + "2: Lister les rendez-vous passés, présents et à venir d'un client\n" + "3: Prendre un rendez-vous\n"
                 + "4: Supprimer un rendez-vous\n" + "9: Quitter\n" + "Entrer un numéro d'action:\n");
     }
     
+    //affiche le mode de persistence saisi en paramètre
     public void afficherPersistence(String mode) {
         System.out.println("Mode de persistence : " + mode);
     }
     
+    // attent que l'user saisisse un un valide au bon format puis le renvoie en int
     public int attendreChoix() {
         int choix = 9;
         String saisie;
@@ -36,6 +39,7 @@ public class Menu {
         return choix;
     }
 
+    // attent que l'user saisisse une date valide au bon format puis la renvoie en string
     public String attendreDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String saisie = null;
@@ -50,6 +54,7 @@ public class Menu {
         return saisie;
     }
 
+    //attent que l'user saisisse une date valide au bon format puis la renvoie en string
     public String attendreDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String saisie = null;
@@ -64,6 +69,7 @@ public class Menu {
         return saisie;
     }
 
+    // attent que l'user saisisse un nom valide au bon format puis le renvoie en string
     public String attendreNom(String personne) {
         Pattern pattern = Pattern.compile("^[A-Z]\\. [A-Z]{1}[a-z]+?");
         String saisie = null;

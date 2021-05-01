@@ -29,9 +29,9 @@ public interface DatabaseInteraction {
     /**
      * 
      * @param table   rendezvous ou disponibilites
-     * @param columns
-     * @param values
-     * @return
+     * @param columns colonnes testées
+     * @param values  valeurs auxquels doivent être égales
+     * @return int 0 si ok, 1 si echec
      */
     public Integer delete(String table, String[] columns, String[] values);
 }

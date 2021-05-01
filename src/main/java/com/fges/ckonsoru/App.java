@@ -22,6 +22,8 @@ public class App {
         Properties properties = cf.getProperties();
         String persistence = properties.getProperty("persistence");
         DatabaseInteraction db;
+
+        //appel de la bonne classe en fonction du mode de persistence défini dans la config
         if (persistence.equals("xml")) {
             db = new XmlInteraction("src/main/resources/datas.xml");
         } else if (persistence.equals("bdd")) {
@@ -34,8 +36,10 @@ public class App {
         Menu menu = new Menu();
         Manager manager = new Manager(db);
         
+        //affichage du mode de persistence actuel
         menu.afficherPersistence(db.dbMode());
         
+        //affichage du menu et execution du code relatif au choix saisi en boucle tant que l'user ne quitte pas
         int choix;
         int action;
         do {
@@ -43,7 +47,6 @@ public class App {
             choix = menu.attendreChoix();
             action = manager.executerAction(choix);
         } while (action != 0);
-        //fin tests
     }
 
     

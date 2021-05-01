@@ -19,8 +19,11 @@ public class RdvManager {
     public List<String> getRdvsDisponibles(String dateText) {
         List<String> rdvsDispos = new ArrayList<String>();
 
+        //créé les différents patterns pour interpreter les dates saisies en string
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        //création des jours en lettre et en datetime pour les réutiliser plus tard 
         LocalDate dateJour = LocalDate.parse(dateText, formatter);
         String jourSemaine = dateJour.format(DateTimeFormatter.ofPattern("EEEE", Locale.FRENCH));
 
@@ -34,6 +37,7 @@ public class RdvManager {
         String[] tagsRdvs = { "debut", "veterinaire" };
         rdvPris = dbInteraction.selectElementsFromWhere(tagsRdvs, "rendezvous", "debut", dateJour.toString());
 
+        //récupération des crénaux déjà pris et des disponibilités pour recroiser les infos et en déduire les crénaux disponibles
         for (int i = 0; i < disponibilites.size(); i++) {
             Integer heurePremier = Integer.parseInt(disponibilites.get(i).get("debut").split(":")[0]);
             Integer minutesPremier = Integer.parseInt(disponibilites.get(i).get("debut").split(":")[1]);
@@ -47,6 +51,7 @@ public class RdvManager {
                 boolean reserve = false;
                 for (int j = 0; j < rdvPris.size(); j++) {
                     LocalDateTime creneauRdv = LocalDateTime.parse(rdvPris.get(j).get("debut"));
+                    //si le créneau est dans les rdv déjà pris alors il n'est pas disponible
                     if (rdvPris.get(j).get("veterinaire").equals(veterinaire) && creneauRdv.equals(creneau)) {
                         reserve = true;
                         break;
@@ -96,6 +101,7 @@ public class RdvManager {
         return rdvsClient;
     }
 
+    //affiche la liste des disponibilités 
     public void afficherRdvsClient(String client) {
         List<String> rdvsDispos = this.getRdvsClient(client);
         String nbRdvs = Integer.toString(rdvsDispos.size());
@@ -111,15 +117,18 @@ public class RdvManager {
         }
     }
 
+    // ajoute un rdv en fonction de la date et du client
     public void addRdv(String date, String veterinaire, String client) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-        String[] columns = {"debut", "client", "veterinaire"};
-        String[] values = {dateTime.toString(), client, veterinaire};
+        String[] columns = { "debut", "client", "veterinaire" };
+        String[] values = { dateTime.toString(), client, veterinaire };
         this.dbInteraction.insert("rendezvous", columns, values);
-        System.out.println("Un rendez-vous pour " + client + " avec " + veterinaire + " a été réservé le " + dateTime.toString() + "\n");
+        System.out.println("Un rendez-vous pour " + client + " avec " + veterinaire + " a été réservé le "
+                + dateTime.toString() + "\n");
     }
     
+    //supprime un rdv en fonction de la date et du client
     public void deleteRdv(String date, String client) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
