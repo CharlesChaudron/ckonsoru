@@ -5,7 +5,7 @@
 
 L'application est divisée en plusieurs classes pour répartir et cloisonner les différentes fonctions du programme. Voici les différentes classes avec la description de leurs utilités ci dessous.
 
-## les différentes classes
+## V1 - les différentes classes
 
 ### Menu
 
@@ -22,3 +22,8 @@ DatabaseInteraction est une interface qui vise à faire respecter un standard à
 ### RdvManager
 
 Enfin, la classe RdvManager contient toutes les méthodes nécéssaires à l'execution des différents services proposés par l'application, par exemple la classe dispose d'une méthode gérant l'obtension de toutes les disponibilités pour une date donnée par l'utilisateur. Cette classe utilise un mode de persistance de données fourni à la création de l'objet.
+
+## V2 - Modifications
+
+Nous avons mis en place la méthode du singleton et les DAO pour l'accès aux données, en réalité nous avions déjà travaillé en utilisant la méthode des doa avant le cours. En revanche nous n'avions pas utilisé les DAO, chose que nous avons corrigé rapidement.
+Enfin nous avons modifié nos classes qui envoyaient des string ou des lsites de string par des objets ou des listes d'objets pour plus de propreté.
