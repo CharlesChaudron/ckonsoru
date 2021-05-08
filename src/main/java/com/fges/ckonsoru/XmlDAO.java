@@ -25,12 +25,20 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-public class XmlInteraction implements DatabaseInteraction {
+public class XmlDAO implements DAOInterface {
 
+    private static XmlDAO uniqueInstance;
     String xmlFilePath;
 
-    public XmlInteraction(String xmlFilePath) {
+    private XmlDAO(String xmlFilePath) {
         this.xmlFilePath = xmlFilePath;
+    }
+
+    public static XmlDAO getInstance(String xmlFilePath) {
+        if (uniqueInstance == null) {
+            uniqueInstance = new XmlDAO(xmlFilePath);
+        }
+        return uniqueInstance;
     }
 
     @Override

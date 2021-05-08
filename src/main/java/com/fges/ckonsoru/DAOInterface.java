@@ -2,7 +2,8 @@ package com.fges.ckonsoru;
 
 import java.util.Map;
 
-public interface DatabaseInteraction {
+
+public interface DAOInterface {
     /**
      * 
      * @param tags liste des tags à sélectionner

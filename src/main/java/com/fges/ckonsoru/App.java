@@ -21,13 +21,13 @@ public class App {
         ConfigLoader cf = new ConfigLoader();
         Properties properties = cf.getProperties();
         String persistence = properties.getProperty("persistence");
-        DatabaseInteraction db;
+        DAOInterface db;
 
         //appel de la bonne classe en fonction du mode de persistence défini dans la config
         if (persistence.equals("xml")) {
-            db = new XmlInteraction("src/main/resources/datas.xml");
+            db = XmlDAO.getInstance("src/main/resources/datas.xml");
         } else if (persistence.equals("bdd")) {
-            db = new PostgresInteraction();
+            db = PostgresDAO.getInstance();
         } else {
             System.out.println("Mode de persistence inconnu.");
             return;

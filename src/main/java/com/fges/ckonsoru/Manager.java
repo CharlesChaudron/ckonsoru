@@ -2,11 +2,11 @@ package com.fges.ckonsoru;
 
 public class Manager {
 
-    DatabaseInteraction db;
+    DAOInterface db;
     Menu menu;
     RdvManager rdvManager;
 
-    public Manager(DatabaseInteraction db) {
+    public Manager(DAOInterface db) {
         this.db = db;
         this.menu = new Menu();
         this.rdvManager = new RdvManager(db);

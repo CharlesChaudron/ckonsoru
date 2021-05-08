@@ -9,7 +9,20 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
 
-public class PostgresInteraction implements DatabaseInteraction {
+public class PostgresDAO implements DAOInterface {
+
+    private static PostgresDAO uniqueInstance;
+
+    private PostgresDAO() {
+        
+    }
+
+    public static PostgresDAO getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new PostgresDAO();
+        }
+        return uniqueInstance;
+    }
 
     @Override
     public Map<Integer, Map<String, String>> selectElementsFromWhere(String[] tags, String from, String where,

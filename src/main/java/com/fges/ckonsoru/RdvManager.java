@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class RdvManager {
 
-    DatabaseInteraction dbInteraction;
+    DAOInterface dbInteraction;
 
-    public RdvManager(DatabaseInteraction dbInteraction) {
+    public RdvManager(DAOInterface dbInteraction) {
         this.dbInteraction = dbInteraction;
     }
 
