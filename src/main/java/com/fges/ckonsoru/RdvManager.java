@@ -16,8 +16,8 @@ public class RdvManager {
         this.dbInteraction = dbInteraction;
     }
 
-    public List<String> getRdvsDisponibles(String dateText) {
-        List<String> rdvsDispos = new ArrayList<String>();
+    public List<Rdv> getRdvsDisponibles(String dateText) {
+        List<Rdv> rdvsDispos = new ArrayList<Rdv>();
 
         //créé les différents patterns pour interpreter les dates saisies en string
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -58,7 +58,10 @@ public class RdvManager {
                     }
                 }
                 if (!reserve) {
-                    rdvsDispos.add(veterinaire + " : " + creneau.format(formatter2));
+                    Rdv rdv = new Rdv();
+                    rdv.setDebut(creneau.format(formatter2));
+                    rdv.setVeterinaire(veterinaire);
+                    rdvsDispos.add(rdv);
                 }
                 creneau = creneau.plusMinutes(20);
             }
@@ -69,10 +72,10 @@ public class RdvManager {
     
     public void afficherDisponibilitesJour(String date) {
         System.out.println("Disponibilités pour le " + date);
-        List<String> rdvsDispos = this.getRdvsDisponibles(date);
+        List<Rdv> rdvsDispos = this.getRdvsDisponibles(date);
 
         if (rdvsDispos.size() > 0) {
-            for (String dispo : rdvsDispos) {
+            for (Rdv dispo : rdvsDispos) {
                 System.out.println(dispo);
             }
             System.out.println("\n");
@@ -81,8 +84,8 @@ public class RdvManager {
         }
     }
     
-    public List<String> getRdvsClient(String client) {
-        List<String> rdvsClient = new ArrayList<String>();
+    public List<Rdv> getRdvsClient(String client) {
+        List<Rdv> rdvsClient = new ArrayList<Rdv>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         // récupération de toutes les disponibilités au jour donné
@@ -91,11 +94,15 @@ public class RdvManager {
         rdvs = dbInteraction.selectElementsFromWhere(tagsDispos, "rendezvous", "client", client);
 
         for (int i = 0; i < rdvs.size(); i++) {
+            Rdv rdv = new Rdv();
             String debutText = rdvs.get(i).get("debut");
             LocalDateTime debut = LocalDateTime.parse(debutText);
             debutText = debut.format(formatter);
+            rdv.setDebut(debutText);
             String veterinaire = rdvs.get(i).get("veterinaire");
-            rdvsClient.add(debutText + " avec " + veterinaire);
+            rdv.setVeterinaire(veterinaire);
+
+            rdvsClient.add(rdv);
         }
 
         return rdvsClient;
@@ -103,13 +110,13 @@ public class RdvManager {
 
     //affiche la liste des disponibilités 
     public void afficherRdvsClient(String client) {
-        List<String> rdvsDispos = this.getRdvsClient(client);
+        List<Rdv> rdvsDispos = this.getRdvsClient(client);
         String nbRdvs = Integer.toString(rdvsDispos.size());
         System.out.println(nbRdvs + " rendez-vous trouvé(s) pour " + client);
 
         if (rdvsDispos.size() > 0) {
-            for (String dispo : rdvsDispos) {
-                System.out.println(dispo);
+            for (Rdv dispo : rdvsDispos) {
+                System.out.println(dispo.toString());
             }
             System.out.println("\n");
         } else {
