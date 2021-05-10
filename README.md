@@ -1,7 +1,8 @@
 # ckonsoru
+
 - adresse git : <github.com/CharlesChaudron/ckonsoru>
 
-## Introduciton
+## Introduction
 
 L'application est divisée en plusieurs classes pour répartir et cloisonner les différentes fonctions du programme. Voici les différentes classes avec la description de leurs utilités ci dessous.
 

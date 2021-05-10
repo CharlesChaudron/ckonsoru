@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -30,13 +31,16 @@ public class XmlDAO implements DAOInterface {
     private static XmlDAO uniqueInstance;
     String xmlFilePath;
 
-    private XmlDAO(String xmlFilePath) {
-        this.xmlFilePath = xmlFilePath;
+    private XmlDAO() {
+        ConfigLoader cf = new ConfigLoader();
+        Properties properties = cf.getProperties();
+        String fichier = properties.getProperty("xml.fichier");
+        this.xmlFilePath = fichier;
     }
 
-    public static XmlDAO getInstance(String xmlFilePath) {
+    public static XmlDAO getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new XmlDAO(xmlFilePath);
+            uniqueInstance = new XmlDAO();
         }
         return uniqueInstance;
     }

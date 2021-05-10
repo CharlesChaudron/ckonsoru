@@ -25,7 +25,7 @@ public class App {
 
         //appel de la bonne classe en fonction du mode de persistence défini dans la config
         if (persistence.equals("xml")) {
-            db = XmlDAO.getInstance("src/main/resources/datas.xml");
+            db = XmlDAO.getInstance();
         } else if (persistence.equals("bdd")) {
             db = PostgresDAO.getInstance();
         } else {
