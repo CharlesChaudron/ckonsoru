@@ -2,6 +2,8 @@ package com.fges.ckonsoru;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.Map;
 import java.util.Properties;
 
@@ -14,12 +16,13 @@ public class PostgresDAO implements DAOInterface {
         ConfigLoader cf = new ConfigLoader();
         Properties properties = cf.getProperties();
         String url = properties.getProperty("bdd.url");
-        String login = properties.getProperty("bdd.mdp");
-        String mdp = properties.getProperty("bdd.login");
+        String mdp = properties.getProperty("bdd.mdp");
+        String login = properties.getProperty("bdd.login");
         Connection c = null;
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(url, login, mdp);
+            c.setAutoCommit(false);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -38,7 +41,7 @@ public class PostgresDAO implements DAOInterface {
     @Override
     public Map<Integer, Map<String, String>> selectElementsFromWhere(String[] tags, String from, String where,
             String equals) {
-        // TODO Auto-generated method stub
+        
         return null;
     }
     
@@ -49,11 +52,41 @@ public class PostgresDAO implements DAOInterface {
 
     @Override
     public Integer insert(String table, String[] columns, String[] values) {
+        try {
+            String deleteString = "INSERT INTO ?";
+            for (int i = 0; i < columns.length; i++) {
+                PreparedStatement deleStatement = this.c.prepareStatement(deleteString);
+                deleStatement.setString(1, table);
+                deleStatement.setString(2, columns[i]);
+                deleStatement.setString(3, values[i]);
+                System.out.println(deleStatement.toString()); // statement ok mais erreur quand même...
+
+                deleStatement.executeUpdate();
+                return 0;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return 1;
     }
 
     @Override
     public Integer delete(String table, String[] columns, String[] values) {
+        try {
+            String deleteString = "DELETE FROM ? WHERE ?=?";
+            for (int i = 0; i < columns.length; i++) {
+                PreparedStatement deleStatement = this.c.prepareStatement(deleteString);
+                deleStatement.setString(1, table);
+                deleStatement.setString(2, columns[i]);
+                deleStatement.setString(3, values[i]);
+                System.out.println(deleStatement.toString()); // statement ok mais erreur quand même...
+                
+                deleStatement.executeUpdate();
+                return 0;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return 1;
     }
     
