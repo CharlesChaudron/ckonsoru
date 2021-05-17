@@ -28,6 +28,15 @@ public interface RendezVousDAO {
      */
     public void supprimerRendezVous(RendezVous rendezVous);
     
+    
+    
+    /**
+     * Met à jour la liste d'attente après la suppression
+     * @param rendezVous 
+     */
+    public void mettreAjourListeAttente(RendezVous rendezVous);
+
+    
     /**
      * Donne la liste des rendez-vous passés, présents et futurs 
      * pour un client donné

@@ -29,6 +29,10 @@ public class RendezVous {
     public String getNomClient() {
         return nomClient;
     }
+    
+    public int getIdClient() {
+        return numero;
+    }
 
     public void setNomClient(String nomClient) {
         this.nomClient = nomClient;

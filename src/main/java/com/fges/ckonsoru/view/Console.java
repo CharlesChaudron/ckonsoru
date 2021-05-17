@@ -40,7 +40,10 @@ public class Console {
         actionsParNumero.put(4, action4);
         ListeAnnulationAction action8 = 
             new ListeAnnulationAction(8, "Lister les annulations", annDao);
-        actionsParNumero.put(8, action8);    
+        actionsParNumero.put(8, action8);
+        ListeAttenteAction action10 = 
+            new ListeAttenteAction(10, "Afficher la liste d'attente", listeAttenteDAO);
+        actionsParNumero.put(10, action10);
     }
     
     public void afficheMenu(){

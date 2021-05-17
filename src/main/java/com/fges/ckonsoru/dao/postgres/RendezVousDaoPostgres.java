@@ -62,6 +62,30 @@ public class RendezVousDaoPostgres
             System.err.println(e.getMessage());
         }
     }
+    //probleme de code sur cette fonction, pas le  temps de la faire fonctionner.
+        @Override
+        public void mettreAjourListeAttente(RendezVous rendezVous){
+        try {
+            PreparedStatement st = this.postgresConnexion.conn.prepareStatement(
+                "BEGIN;\n" +
+                "UPDATE listeAttente \n" +
+                "SET la_creneauPropose = ?\n" +
+                "WHERE la_id = ?\n" +
+                "SELECT * FROM listeAttente;\n" +
+                "ROLLBACK;" 
+              );
+            st.setObject(1,rendezVous.getDate());
+            st.setObject(2, rendezVous.getIdClient());
+            st.executeUpdate();
+            
+        }catch(SQLException e){
+            System.err.println("Problème lors de la requête supprimerRendezVous");
+            System.err.println(e.getMessage());
+        }
+    }
+
+    
+    
 
     @Override
     public List<RendezVous> listeRendezVousPourClient(String nomClient) {
