@@ -5,14 +5,12 @@
  */
 package com.fges.ckonsoru.view;
 
+import com.fges.ckonsoru.Observable.RdvObservable;
 import com.fges.ckonsoru.dao.AnnulationDAO;
 import com.fges.ckonsoru.dao.RendezVousDAO;
-import com.fges.ckonsoru.model.Annulation;
 import com.fges.ckonsoru.model.RendezVous;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 
@@ -21,16 +19,18 @@ import java.time.format.DateTimeFormatter;
  * @author julie.jacques
  */
 public class SupprimerRdvAction 
-    extends ActionConsole {
+    extends ActionConsole  {
 
+    protected RdvObservable rdvObservable;
     protected RendezVousDAO rdvDao;
     protected AnnulationDAO annDao;
     protected DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     
-    public SupprimerRdvAction(int numero, String description, RendezVousDAO rdvDao, AnnulationDAO annDao) {
+    public SupprimerRdvAction(int numero, String description, RendezVousDAO rdvDao, AnnulationDAO annDao, RdvObservable rdvObservable) {
         super(numero, description);
         this.rdvDao = rdvDao;
         this.annDao = annDao;
+        this.rdvObservable = rdvObservable;
     }
 
     @Override
@@ -43,13 +43,7 @@ public class SupprimerRdvAction
         String client = scanner.nextLine();
         RendezVous delRdv = new RendezVous(client,debut,"");
         this.rdvDao.supprimerRendezVous(delRdv);
-        //devrait être fait dans un controller et pas dans la vue pour respecter le mvc
-        Long delaiSecondes = Duration.between(LocalDateTime.now(), debut).getSeconds();
-        if (delaiSecondes < 86400) {
-            LocalTime delai = LocalTime.ofSecondOfDay(delaiSecondes);
-            Annulation annulation = new Annulation(client, debut, "", delai);
-            this.annDao.tracerAnnulation(annulation);
-        }
+        
         System.out.println("Un rendez-vous pour "+client+" le  "+ timeFormatter.format(debut) + " a été supprimé");
     }
     

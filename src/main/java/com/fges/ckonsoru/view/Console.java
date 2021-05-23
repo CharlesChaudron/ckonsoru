@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.fges.ckonsoru.view;
+import com.fges.ckonsoru.Observer.RdvObserver;
 import com.fges.ckonsoru.dao.AnnulationDAO;
 import com.fges.ckonsoru.dao.DisponibilitesDAO;
 import com.fges.ckonsoru.dao.ListeAttenteDAO;
@@ -21,7 +22,7 @@ public class Console {
     protected HashMap<Integer,ActionConsole> actionsParNumero;
     
     public Console(DisponibilitesDAO disponibilitesDAO,
-                   RendezVousDAO rdvDAO, AnnulationDAO annDao, ListeAttenteDAO listeAttenteDAO){
+                   RendezVousDAO rdvDAO, AnnulationDAO annDao, ListeAttenteDAO listeAttenteDAO, RdvObserver rdvObserver){
         actionsParNumero = new HashMap<>();
         InitApp action0 =
                 new InitApp(0,"Initialiser une semaine complète [DEV]",rdvDAO,disponibilitesDAO);
@@ -36,7 +37,7 @@ public class Console {
             new PrendreRdvAction(3, "Prendre un rendez-vous",rdvDAO);
         actionsParNumero.put(3,action3);
         SupprimerRdvAction action4 =
-            new SupprimerRdvAction(4, "Supprimer un rendez-vous",rdvDAO, annDao);
+            new SupprimerRdvAction(4, "Supprimer un rendez-vous",rdvDAO, annDao, rdvObserver);
         actionsParNumero.put(4, action4);
         ListeAnnulationAction action8 = 
             new ListeAnnulationAction(8, "Lister les annulations", annDao);
