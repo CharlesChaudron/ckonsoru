@@ -140,4 +140,9 @@ public class RendezVousDaoXML
                         LocalDateTime.parse(debut, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         return new RendezVous(client,debutLD,veto);
     } 
+
+    @Override
+    public void mettreAjourListeAttente(RendezVous rendezVous) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
